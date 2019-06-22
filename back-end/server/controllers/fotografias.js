@@ -7,9 +7,13 @@ function create(req,res) {
     var body=req.body;
     fotografias.create(body)
         .then(fotografias=>{
+            console.log(fotografias);
             res.status(200).send({fotografias});
+
         })
         .catch(err=>{
+            console.log(err);
+
             res.status(500).send({message:"Ocurrio un error al guardar la fotografia"});
         })
 }
@@ -97,9 +101,9 @@ function getFotografia(req,res){
     var fotografia=req.params.fotografia;
     var thumb=req.params.thumb;
 
-    if(!thumb){
+    if(thumb=="false"){
         var path_foto='.server/uploads/fotografias/' +fotografia;
-    }else{
+    }else if(thumb == "true"){
         var path_foto='./server/uploads/fotografias/thumbs/' +fotografia;
     }
 
