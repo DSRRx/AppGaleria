@@ -101,11 +101,11 @@ function getFotografia(req,res){
     var fotografia=req.params.fotografia;
     var thumb=req.params.thumb;
 
-    if(thumb=="false"){
-        var path_foto='.server/uploads/fotografias/' +fotografia;
-    }else if(thumb == "true"){
+    if(thumb=="false")
+        var path_foto='./server/uploads/fotografias/' +fotografia;
+    else if(thumb == "true")
         var path_foto='./server/uploads/fotografias/thumbs/' +fotografia;
-    }
+
 
     fs.exists(path_foto,(exists)=>{
         if (exists){
@@ -148,11 +148,26 @@ function getAllAdmin(req,res){
         })
 }
 
+function getById(req,res){
+
+    var id=req.params.id;
+
+    fotografias.findByPk(id)
+        .then(fotografias=>{
+            res.status(200).send({fotografias});
+        })
+        .catch(err=>{
+            res.status(500).send({message:"ocurrio un error al buscar una fotografias."});
+        })
+}
+
+
 module.exports={
     create,
     update,
     uploadFotografia,
     getFotografia,
     getAll,
-    getAllAdmin
+    getAllAdmin,
+    getById
 }
